@@ -22,13 +22,16 @@
 - [x] Event mesh concept on landing page as premium showcase
 
 ## Phase 2 — Backend Hardening (Next Sprint)
-- [ ] Implement transaction creation + commission split on contact reveal
-- [ ] Add Apex_SHA~512# provenance hash generation for transaction sealing
-- [ ] Photo upload integration via S3 storage helpers
-- [ ] Backend-enforced RBAC for operator/franchise procedures
+- [x] Implement transaction creation + commission split on contact reveal
+- [x] Add Apex_SHA~512# provenance hash generation for transaction sealing
+- [x] Photo upload integration via S3 storage helpers
+- [x] Backend-enforced RBAC for operator/franchise procedures
 - [ ] Subscription tier management flow (Stripe-ready when activated)
-- [ ] Seller listing management actions (edit, delete, status toggle)
+- [x] Seller listing management actions (edit, delete, status toggle)
 - [ ] Inquiries backend + UI for buyer-seller messaging
-- [ ] Persist domain shield records through tRPC procedures
+- [x] Persist domain shield records through tRPC procedures
 - [ ] TriStar routing state machine with real status updates
 - [ ] Garage Band Mesh event creation + QR entry flow
+- [ ] Searchable/filterable listings map view (placeholder — topographical mesh visualization)
+- [x] Photo upload integration via S3 storage helpers (full UI + backend wired)
+- [x] Seller listing management actions (status toggle via dashboard menu)

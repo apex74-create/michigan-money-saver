@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Shield, Globe, Lock, Radio, Zap, Server } from "lucide-react";
+import { trpc } from "@/lib/trpc";
 
 export default function Franchise() {
   const { user, isAuthenticated } = useAuth();
@@ -16,12 +17,29 @@ export default function Franchise() {
   const [provisionType, setProvisionType] = useState<"apex" | "byod">("apex");
   const [domains, setDomains] = useState({ tarwell: "", torito: "", vault: "" });
 
+  const provisionMutation = trpc.franchise.provisionShield.useMutation({
+    onSuccess: (data) => {
+      toast.success(data.message);
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
+
+  const { data: myShields } = trpc.franchise.myShields.useQuery(undefined, { enabled: isAuthenticated && isPro });
+
   const handleProvision = () => {
     if (!nameplate) {
       toast.error("Enter your business nameplate");
       return;
     }
-    toast.success("Domain shield provisioning initiated. SSL + TriStar routing will activate within 24hrs.");
+    provisionMutation.mutate({
+      nameplate,
+      provisionType: provisionType === "apex" ? "apex_provisioned" : "bring_your_own",
+      tarwellDomain: domains.tarwell || undefined,
+      toritoDomain: domains.torito || undefined,
+      vaultDomain: domains.vault || undefined,
+    });
   };
 
   return (
@@ -242,4 +260,3 @@ export default function Franchise() {
     </div>
   );
 }
-

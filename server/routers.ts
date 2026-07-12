@@ -11,8 +11,35 @@ import {
 } from "./db";
 import { listings } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
+import { storagePut } from "./storage";
 
 const listingsRouter = router({
+  uploadPhoto: protectedProcedure
+    .input(z.object({
+      listingId: z.number(),
+      fileName: z.string(),
+      base64Data: z.string(),
+      contentType: z.string().default("image/jpeg"),
+    }))
+    .mutation(async ({ input, ctx }) => {
+      const listing = await getListingById(input.listingId);
+      if (!listing) throw new Error("Listing not found");
+      if (listing.sellerId !== ctx.user.id) throw new Error("Not your listing");
+
+      const buffer = Buffer.from(input.base64Data, "base64");
+      const fileKey = `listings/${input.listingId}/${Date.now()}-${input.fileName}`;
+      const { url } = await storagePut(fileKey, buffer, input.contentType);
+
+      // Update listing photos array
+      const db = await getDb();
+      if (!db) throw new Error("Database not available");
+      const currentPhotos: string[] = (listing.photos as string[]) || [];
+      const updatedPhotos = [...currentPhotos, url];
+      await db.update(listings).set({ photos: updatedPhotos }).where(eq(listings.id, input.listingId));
+
+      return { url, totalPhotos: updatedPhotos.length };
+    }),
+
   search: publicProcedure
     .input(z.object({
       search: z.string().optional(),

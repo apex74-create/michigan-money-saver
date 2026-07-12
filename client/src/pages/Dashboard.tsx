@@ -4,13 +4,26 @@ import NavBar from "@/components/NavBar";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
 import { Link } from "wouter";
-import { Plus, Eye, Users, DollarSign, TrendingUp } from "lucide-react";
+import { Plus, Eye, Users, DollarSign, TrendingUp, MoreVertical, CheckCircle, XCircle, Pause } from "lucide-react";
+import { toast } from "sonner";
+import { useState } from "react";
 
 export default function Dashboard() {
   const { user, isAuthenticated } = useAuth();
+  const utils = trpc.useUtils();
 
   const { data: myListings } = trpc.listings.myListings.useQuery(undefined, { enabled: isAuthenticated });
   const { data: stats } = trpc.listings.myStats.useQuery(undefined, { enabled: isAuthenticated });
+  const updateStatusMutation = trpc.listings.updateStatus.useMutation({
+    onSuccess: () => {
+      toast.success("Listing status updated");
+      utils.listings.myListings.invalidate();
+      utils.listings.myStats.invalidate();
+    },
+    onError: (err) => toast.error(err.message),
+  });
+
+  const [menuOpen, setMenuOpen] = useState<number | null>(null);
 
   if (!isAuthenticated) {
     return (
@@ -99,6 +112,40 @@ export default function Dashboard() {
                         <div className="text-right">
                           <div className="text-[10px] text-muted-foreground">{listing.viewCount} views</div>
                           <div className="text-[10px] text-terminal">{listing.contactRevealCount} reveals</div>
+                        </div>
+                        <div className="relative">
+                          <button
+                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setMenuOpen(menuOpen === listing.id ? null : listing.id); }}
+                            className="p-1 hover:bg-terminal/10 rounded"
+                          >
+                            <MoreVertical size={14} className="text-muted-foreground" />
+                          </button>
+                          {menuOpen === listing.id && (
+                            <div className="absolute right-0 top-8 z-50 border border-border bg-card p-1 min-w-[140px] shadow-lg">
+                              {listing.status !== "active" && (
+                                <button
+                                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); updateStatusMutation.mutate({ id: listing.id, status: "active" }); setMenuOpen(null); }}
+                                  className="w-full text-left px-3 py-1.5 text-[10px] text-terminal hover:bg-terminal/10 flex items-center gap-2"
+                                >
+                                  <CheckCircle size={10} /> ACTIVATE
+                                </button>
+                              )}
+                              {listing.status === "active" && (
+                                <button
+                                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); updateStatusMutation.mutate({ id: listing.id, status: "ended" }); setMenuOpen(null); }}
+                                  className="w-full text-left px-3 py-1.5 text-[10px] text-brass hover:bg-brass/10 flex items-center gap-2"
+                                >
+                                  <Pause size={10} /> END SALE
+                                </button>
+                              )}
+                              <button
+                                onClick={(e) => { e.preventDefault(); e.stopPropagation(); updateStatusMutation.mutate({ id: listing.id, status: "cancelled" }); setMenuOpen(null); }}
+                                className="w-full text-left px-3 py-1.5 text-[10px] text-classified hover:bg-classified/10 flex items-center gap-2"
+                              >
+                                <XCircle size={10} /> CANCEL
+                              </button>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { startLogin } from "@/const";
 import NavBar from "@/components/NavBar";
@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
-import { Zap, Upload } from "lucide-react";
+import { Zap, Upload, X } from "lucide-react";
 
 const CATEGORIES = [
   "general", "furniture", "electronics", "clothing", "tools",
@@ -31,9 +31,28 @@ export default function CreateListing() {
     priceMin: "",
     priceMax: "",
   });
+  const [photos, setPhotos] = useState<{ file: File; preview: string }[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const uploadPhotoMutation = trpc.listings.uploadPhoto.useMutation();
 
   const createMutation = trpc.listings.create.useMutation({
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
+      if (photos.length > 0) {
+        setUploading(true);
+        for (const photo of photos) {
+          try {
+            const base64 = await fileToBase64(photo.file);
+            await uploadPhotoMutation.mutateAsync({
+              listingId: data.id,
+              fileName: photo.file.name,
+              base64Data: base64,
+              contentType: photo.file.type || "image/jpeg",
+            });
+          } catch (e) { console.error("Photo upload failed:", e); }
+        }
+        setUploading(false);
+      }
       toast.success("Sale posted to the mesh!");
       setLocation(`/listing/${data.id}`);
     },
@@ -41,6 +60,25 @@ export default function CreateListing() {
       toast.error(err.message || "Failed to create listing");
     },
   });
+
+  function fileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => { resolve((reader.result as string).split(",")[1]); };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    const newPhotos = files.map((file) => ({ file, preview: URL.createObjectURL(file) }));
+    setPhotos((prev) => [...prev, ...newPhotos].slice(0, 20));
+  };
+
+  const removePhoto = (index: number) => {
+    setPhotos((prev) => prev.filter((_, i) => i !== index));
+  };
 
   if (!isAuthenticated) {
     return (
@@ -229,10 +267,23 @@ export default function CreateListing() {
             {/* Photo Upload Placeholder */}
             <div className="space-y-2">
               <label className="text-[10px] tracking-[0.2em] text-brass uppercase">PHOTOS</label>
-              <div className="border border-dashed border-terminal/30 bg-background p-8 text-center">
+              <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={handleFileSelect} className="hidden" />
+              {photos.length > 0 && (
+                <div className="grid grid-cols-4 gap-2 mb-3">
+                  {photos.map((photo, i) => (
+                    <div key={i} className="relative border border-terminal/20 aspect-square">
+                      <img src={photo.preview} alt="" className="w-full h-full object-cover" />
+                      <button type="button" onClick={() => removePhoto(i)} className="absolute top-1 right-1 w-5 h-5 bg-classified text-white flex items-center justify-center">
+                        <X size={10} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div onClick={() => fileInputRef.current?.click()} className="border border-dashed border-terminal/30 bg-background p-8 text-center cursor-pointer hover:border-terminal/60 transition-colors">
                 <Upload size={24} className="text-terminal/40 mx-auto mb-2" />
                 <p className="text-[10px] text-muted-foreground tracking-wider">
-                  Photo upload coming soon — drag & drop or click
+                  {photos.length > 0 ? `${photos.length} photo(s) selected — click to add more` : "Click to select photos (up to 20)"}
                 </p>
               </div>
             </div>
@@ -240,11 +291,11 @@ export default function CreateListing() {
             {/* Submit */}
             <Button
               type="submit"
-              disabled={createMutation.isPending}
+              disabled={createMutation.isPending || uploading}
               className="w-full bg-terminal text-background hover:bg-terminal/90 text-[11px] tracking-[0.2em] uppercase py-3"
             >
               <Zap size={14} className="mr-2" />
-              {createMutation.isPending ? "POSTING TO MESH..." : "POST SALE — GO LIVE"}
+              {uploading ? "UPLOADING PHOTOS..." : createMutation.isPending ? "POSTING TO MESH..." : "POST SALE — GO LIVE"}
             </Button>
           </form>
         </div>
