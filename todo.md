@@ -35,3 +35,14 @@
 - [ ] Searchable/filterable listings map view (placeholder — topographical mesh visualization)
 - [x] Photo upload integration via S3 storage helpers (full UI + backend wired)
 - [x] Seller listing management actions (status toggle via dashboard menu)
+- [ ] Vertex Package Assembly builder (36 engines / 81 modules)
+- [ ] Attendee mesh dashboard: Superdome DOM rendering, venue radar, vendor map
+- [ ] Sovereign non-GPS mesh triangulation (Batman sonar / PE envelope)
+- [x] Sovereign chat backend: 12D armor + coinhole + PE timing engine
+- [x] tRPC procedures for encode/decode/sync sovereign messages
+- [x] TriStar routing calculation for proof-of-ownership
+- [ ] Meshtastic-compatible sovereign chat + Android Nearby Devices
+- [ ] ZapBack defense radar — device awareness, evil twin detection
+- [ ] Nearby services: camping, hospitals, emergency, parking
+- [ ] Couples meet-up chat — sovereign encrypted pairing
+- [ ] Interactive entertainment AR overlay in dome rendering

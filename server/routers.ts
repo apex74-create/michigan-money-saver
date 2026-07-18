@@ -12,6 +12,7 @@ import {
 import { listings } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
 import { storagePut } from "./storage";
+import { sovereignChatRouter } from "./routers/sovereignChat";
 
 const listingsRouter = router({
   uploadPhoto: protectedProcedure
@@ -247,6 +248,7 @@ export const appRouter = router({
   }),
   listings: listingsRouter,
   franchise: franchiseRouter,
+  sovereignChat: sovereignChatRouter,
 });
 
 export type AppRouter = typeof appRouter;
