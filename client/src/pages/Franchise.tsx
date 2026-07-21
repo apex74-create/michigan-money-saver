@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Shield, Globe, Lock, Radio, Zap, Server } from "lucide-react";
+import { Activity, RefreshCw } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 
 export default function Franchise() {
@@ -27,6 +28,14 @@ export default function Franchise() {
   });
 
   const { data: myShields } = trpc.franchise.myShields.useQuery(undefined, { enabled: isAuthenticated && isPro });
+  const { data: peStatus, refetch: refetchPE } = trpc.sovereignChat.getPEStatus.useQuery(undefined, {
+    refetchInterval: 5000,
+    enabled: isAuthenticated && isPro,
+  });
+  const { data: tristarRoute } = trpc.sovereignChat.calculateTriStarRoute.useQuery(
+    {},
+    { enabled: isAuthenticated && isPro }
+  );
 
   const handleProvision = () => {
     if (!nameplate) {
@@ -97,9 +106,9 @@ export default function Franchise() {
                   </h3>
                   <div className="space-y-3">
                     {[
-                      { label: "TARWELL", desc: "Tarpit / Attacker Trap", status: "STANDBY", color: "classified" },
-                      { label: "TORITO", desc: "Encrypted Tunnel", status: "STANDBY", color: "info-blue" },
-                      { label: "VAULT", desc: "Evidence Seal / VFS", status: "STANDBY", color: "brass" },
+                    { label: "TARWELL", desc: "Tarpit / Attacker Trap", status: myShields?.length ? "ACTIVE" : "STANDBY", color: "classified" },
+                    { label: "TORITO", desc: "Encrypted Tunnel", status: myShields?.length ? "ROUTING" : "STANDBY", color: "info-blue" },
+                    { label: "VAULT", desc: "Evidence Seal / VFS", status: myShields?.length ? "SEALED" : "STANDBY", color: "brass" },
                     ].map((node, i) => (
                       <div key={i} className="flex items-center justify-between p-3 border border-border">
                         <div className="flex items-center gap-3">
@@ -120,6 +129,30 @@ export default function Franchise() {
                       SOVEREIGN SEARCH: TARWELL → TORITO → VAULT
                     </div>
                   </div>
+                  {tristarRoute && (
+                    <div className="mt-2 text-center text-[8px] text-terminal/70 font-mono">
+                      ROUTE: {tristarRoute.tristarValue.toString(16).toUpperCase().padStart(8, "0")} · PHASE: {(tristarRoute.phase * 100).toFixed(2)}%
+                    </div>
+                  )}
+                  {peStatus && (
+                    <div className="mt-3 space-y-1">
+                      <div className="flex items-center justify-between text-[9px]">
+                        <span className="text-muted-foreground flex items-center gap-1"><Activity size={9} /> PE ENGINE</span>
+                        <button onClick={() => refetchPE()} className="text-muted-foreground hover:text-terminal"><RefreshCw size={9} /></button>
+                      </div>
+                      <div className="h-1 bg-background border border-terminal/20 overflow-hidden">
+                        <div
+                          className={`h-full transition-all duration-500 ${peStatus.inAperture ? "bg-terminal" : "bg-brass"}`}
+                          style={{ width: `${Math.max(5, Math.min(100, ((peStatus.peValue - 366) / 6) * 100))}%` }}
+                        />
+                      </div>
+                      <div className="text-[8px] text-right font-mono">
+                        <span className={peStatus.inAperture ? "text-terminal" : "text-brass"}>
+                          {peStatus.inAperture ? "● APERTURE LOCKED" : "○ DRIFTING"}
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 

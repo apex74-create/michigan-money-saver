@@ -2,7 +2,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { startLogin } from "@/const";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Shield, Store, LayoutDashboard, Tag, Zap } from "lucide-react";
+import { Menu, X, Shield, Store, LayoutDashboard, Tag, Zap, Terminal } from "lucide-react";
 import { useState } from "react";
 
 export default function NavBar() {
@@ -19,6 +19,7 @@ export default function NavBar() {
   const authLinks = [
     { href: "/create", label: "POST SALE", icon: Zap },
     { href: "/dashboard", label: "DASHBOARD", icon: LayoutDashboard },
+    { href: "/admin", label: "OPS", icon: Terminal },
   ];
 
   return (

@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import Franchise from "./pages/Franchise";
 import ListingDetail from "./pages/ListingDetail";
 import Pricing from "./pages/Pricing";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function Router() {
   return (
@@ -22,6 +23,7 @@ function Router() {
       <Route path="/franchise" component={Franchise} />
       <Route path="/listing/:id" component={ListingDetail} />
       <Route path="/pricing" component={Pricing} />
+      <Route path="/admin" component={AdminDashboard} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

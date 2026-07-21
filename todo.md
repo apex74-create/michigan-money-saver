@@ -42,6 +42,16 @@
 - [x] tRPC procedures for encode/decode/sync sovereign messages
 - [x] TriStar routing calculation for proof-of-ownership
 - [ ] Meshtastic-compatible sovereign chat + Android Nearby Devices
+- [x] Vertex Defender Dashboard (Master Admin / OPS page at /admin)
+- [x] PE timing meter with aperture lock indicator
+- [x] 12D armor key visualizer (12 apostle nodes)
+- [x] Sovereign chat panel with coinhole session management
+- [x] TriStar route panel with live routing values
+- [x] Domain shield status panel with coin routine display
+- [x] ZapBack radar placeholder with scanning animation
+- [x] Sovereign search bar (DuckDuckGo privacy routing)
+- [x] Live PE status + TriStar route on Franchise panel
+- [x] OPS nav link in NavBar for authenticated users
 - [ ] ZapBack defense radar — device awareness, evil twin detection
 - [ ] Nearby services: camping, hospitals, emergency, parking
 - [ ] Couples meet-up chat — sovereign encrypted pairing
