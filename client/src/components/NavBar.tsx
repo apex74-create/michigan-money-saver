@@ -3,6 +3,7 @@ import { startLogin } from "@/const";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Shield, Store, LayoutDashboard, Tag, Zap, Terminal } from "lucide-react";
+import { Star } from "lucide-react";
 import { useState } from "react";
 
 export default function NavBar() {
@@ -20,6 +21,7 @@ export default function NavBar() {
     { href: "/create", label: "POST SALE", icon: Zap },
     { href: "/dashboard", label: "DASHBOARD", icon: LayoutDashboard },
     { href: "/admin", label: "OPS", icon: Terminal },
+    { href: "/network", label: "NETWORK", icon: Star },
   ];
 
   return (

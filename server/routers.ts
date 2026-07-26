@@ -13,6 +13,7 @@ import { listings } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
 import { storagePut } from "./storage";
 import { sovereignChatRouter } from "./routers/sovereignChat";
+import { apexNetworkRouter } from "./routers/apexNetwork";
 
 const listingsRouter = router({
   uploadPhoto: protectedProcedure
@@ -249,6 +250,7 @@ export const appRouter = router({
   listings: listingsRouter,
   franchise: franchiseRouter,
   sovereignChat: sovereignChatRouter,
+  apexNetwork: apexNetworkRouter,
 });
 
 export type AppRouter = typeof appRouter;

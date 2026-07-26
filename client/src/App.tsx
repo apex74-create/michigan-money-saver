@@ -12,6 +12,7 @@ import Franchise from "./pages/Franchise";
 import ListingDetail from "./pages/ListingDetail";
 import Pricing from "./pages/Pricing";
 import AdminDashboard from "./pages/AdminDashboard";
+import ApexNetwork from "./pages/ApexNetwork";
 
 function Router() {
   return (
@@ -24,6 +25,7 @@ function Router() {
       <Route path="/listing/:id" component={ListingDetail} />
       <Route path="/pricing" component={Pricing} />
       <Route path="/admin" component={AdminDashboard} />
+      <Route path="/network" component={ApexNetwork} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

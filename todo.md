@@ -56,3 +56,11 @@
 - [ ] Nearby services: camping, hospitals, emergency, parking
 - [ ] Couples meet-up chat — sovereign encrypted pairing
 - [ ] Interactive entertainment AR overlay in dome rendering
+- [x] 12-Star CoinHole cross-site Apex Network chat (/network)
+- [x] apexNetworkTokens DB table with 12-star traversal log
+- [x] Coin minting: SHA-512 hash of all 12 dimensions + DORITO TRIANGLE
+- [x] Full traversal routine: TARWELL → TORITO → VAULT → 9 apostle nodes → APEX
+- [x] Apex Network sites registry (5 known sites)
+- [x] 12-Star SVG topology visualizer with live traversal state
+- [x] Sovereign chat opens only after all 12 star points passed
+- [x] SovereignCoin12D + CoinAuthenticator from legacy site integrated

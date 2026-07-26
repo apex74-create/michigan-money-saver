@@ -137,3 +137,41 @@ export const inquiries = mysqlTable("inquiries", {
 
 export type Inquiry = typeof inquiries.$inferSelect;
 export type InsertInquiry = typeof inquiries.$inferInsert;
+
+/**
+ * Apex Network Tokens — 12-Star CoinHole cross-site proof-of-ownership tokens.
+ * A coin traverses all 12 star points before the coinhole opens for sovereign chat.
+ * Patent Pending | © 2026 Apex Air Solutions, LLC
+ */
+export const apexNetworkTokens = mysqlTable("apexNetworkTokens", {
+  id: int("id").autoincrement().primaryKey(),
+  // Minting site info
+  mintedBy: int("mintedBy").notNull(),           // user ID who minted
+  sourceSite: varchar("sourceSite", { length: 256 }).notNull(),  // origin domain
+  targetSite: varchar("targetSite", { length: 256 }).notNull(),  // destination domain
+  // 12-Star topology
+  coinholeId: varchar("coinholeId", { length: 64 }).notNull(),   // ch_xxx session ID
+  tristarValue: varchar("tristarValue", { length: 32 }).notNull(), // hex routing value
+  peEpoch: varchar("peEpoch", { length: 32 }).notNull(),          // PE aligned epoch
+  // The coin itself — SHA-512 hash of all 12 star points
+  coinHash: varchar("coinHash", { length: 128 }).notNull(),       // Apex_SHA~512# token
+  // 12 star point traversal log (JSON array of {point, ts, status})
+  starTraversal: json("starTraversal").$type<{
+    point: number; label: string; ts: number; status: "pending" | "passed" | "failed";
+  }[]>(),
+  // Routing path through DORITO TRIANGLE
+  tarwellPassed: boolean("tarwellPassed").default(false).notNull(),
+  toritoPassed: boolean("toritoPassed").default(false).notNull(),
+  vaultPassed: boolean("vaultPassed").default(false).notNull(),
+  // Status
+  status: mysqlEnum("status", ["minting", "traversing", "verified", "expired", "rejected"])
+    .default("minting").notNull(),
+  // Chat session opened after coin verification
+  chatSessionId: varchar("chatSessionId", { length: 64 }),
+  expiresAt: timestamp("expiresAt").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ApexNetworkToken = typeof apexNetworkTokens.$inferSelect;
+export type InsertApexNetworkToken = typeof apexNetworkTokens.$inferInsert;

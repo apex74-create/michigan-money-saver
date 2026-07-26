@@ -1,0 +1,20 @@
+CREATE TABLE `apexNetworkTokens` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`mintedBy` int NOT NULL,
+	`sourceSite` varchar(256) NOT NULL,
+	`targetSite` varchar(256) NOT NULL,
+	`coinholeId` varchar(64) NOT NULL,
+	`tristarValue` varchar(32) NOT NULL,
+	`peEpoch` varchar(32) NOT NULL,
+	`coinHash` varchar(128) NOT NULL,
+	`starTraversal` json,
+	`tarwellPassed` boolean NOT NULL DEFAULT false,
+	`toritoPassed` boolean NOT NULL DEFAULT false,
+	`vaultPassed` boolean NOT NULL DEFAULT false,
+	`status` enum('minting','traversing','verified','expired','rejected') NOT NULL DEFAULT 'minting',
+	`chatSessionId` varchar(64),
+	`expiresAt` timestamp NOT NULL,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `apexNetworkTokens_id` PRIMARY KEY(`id`)
+);
