@@ -19,7 +19,7 @@
 
 **Why:** 
 - Privacy-first marketplace (no tracking across shields)
-- Mesh-secured transactions (E029/E030/E031 engines)
+- Consent-based local-navigation and mesh features (E029/E030/E031/E032)
 - Super-buyer features (bulk purchasing, reputation)
 - Distributed network (survives single-point failures)
 
@@ -29,18 +29,23 @@
 
 ### E029 — Sovereign Dead Reckoning Engine (SDRE)
 **Purpose:** GPS-denied positioning for offline mesh networks  
-**Use Case:** Garage sale location discovery without GPS/internet  
-**Integration:** Buyer proximity detection (find nearby sellers)
+**Use Case:** Opt-in relative movement from a user-established starting anchor
+**Integration:** May support on-device walking-distance context; it must not infer a seller’s location without an explicit, authorized location source
 
 ### E030 — Celestial Sensor Fusion (CSF)
 **Purpose:** Solar azimuth positioning from camera  
-**Use Case:** Outdoor garage sale location verification  
-**Integration:** Verify seller location authenticity
+**Use Case:** Candidate solar-orientation data for an opt-in navigation prototype
+**Integration:** The present implementation is not a validated location-verification system and must not be used to authenticate a seller or buyer location
 
 ### E031 — Collective Mesh Inertial Navigation (CMIN)
 **Purpose:** Distributed mesh positioning across nodes  
-**Use Case:** Mesh network of garage sales (garage sale swarms)  
-**Integration:** Collective buyer/seller discovery
+**Use Case:** Consent-based exchange of explicitly authorized anchor information with error bounds
+**Integration:** Optional community event mapping; no participant location may be shared or inferred without informed consent
+
+### E032 — Tremen–Bumbershoot Dual-Frame Confidence Gate (TB-DCG)
+**Purpose:** Keeps local-navigation evidence separate from passive network-context observations
+**Use Case:** Safety and privacy boundary for any opt-in location-adjacent feature
+**Integration:** Public egress IP/ASN observations remain network-context telemetry only; Bumbershoot may request a manual anchor or show degraded confidence, but never treats network egress as a buyer, seller, or listing location
 
 ---
 
@@ -91,15 +96,16 @@ Primary Domain (apex-air-solutions.com)
 
 ### Security & Privacy
 - [ ] 3-shield transaction isolation
-- [ ] Browser cookie clearing between shields
+- [ ] App-scoped storage isolation and clear logout controls between shields
 - [ ] Encrypted messaging
 - [ ] Seller identity verification (optional)
 - [ ] Dispute resolution system
 
 ### Mesh Integration
 - [ ] E029: Offline location discovery
-- [ ] E030: Seller location verification
-- [ ] E031: Garage sale swarm detection (multiple sellers nearby)
+- [ ] E030: Candidate orientation support only after field validation
+- [ ] E031: Opt-in, consented community event mapping with error bounds
+- [ ] E032: Enforce a Bumbershoot confidence boundary between navigation and network-context telemetry
 
 ---
 
@@ -190,6 +196,7 @@ id, order_id, shield_id (1|2|3), amount, status, timestamp
 2. `/home/ubuntu/E030_CELESTIAL_SENSOR_FUSION.md`
 3. `/home/ubuntu/E031_COLLECTIVE_MESH_INERTIAL_NAVIGATION.md`
 4. `/home/ubuntu/APEX_ENGINE_PROVENANCE_PATENT_FILING.md`
+5. `apex74-create/adp-mesh/white-papers/WP-11-TREMEN-BUMBERSHOOT-DUAL-FRAME-NAVIGATION.md`
 
 **ApexDash Documentation:**
 - `/home/ubuntu/apexdash-saas/` (complete project)
@@ -202,6 +209,8 @@ id, order_id, shield_id (1|2|3), amount, status, timestamp
 - apex-miner (main)
 - zapback-vpn4 (main)
 - vertex-global-security (main)
+- apex-provenance (master)
+- secure-flash-shop (main)
 
 ---
 
