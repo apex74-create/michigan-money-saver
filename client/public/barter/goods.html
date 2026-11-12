@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Michigan Money Saver — Barter House: Goods</title>
+<style>
+  :root {
+    --white: #FFFFFF;
+    --crimson: #C8102E;
+    --crimson-dark: #A30C25;
+    --black: #111111;
+    --gray-text: #3d3d3d;
+    --gray-border: #e3e3e3;
+    --gray-bg: #f6f6f6;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--white);
+    color: var(--black);
+    line-height: 1.5;
+    /* Bottom no-fly zone: nothing actionable lives in the lowest band. */
+    padding-bottom: 120px;
+  }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 24px 16px 0 16px; }
+
+  .nameplate { text-align: center; margin-bottom: 8px; }
+  .logo-blocks { display: flex; flex-wrap: wrap; justify-content: center; gap: 0; }
+  .logo-block { display: inline-block; font-weight: bold; font-size: 2rem; letter-spacing: 0.02em; padding: 10px 18px; line-height: 1.1; }
+  .logo-michigan { background: var(--crimson); color: var(--white); }
+  .logo-moneysaver { background: var(--black); color: var(--white); }
+  .tagline { margin-top: 14px; color: var(--crimson); font-size: 0.95rem; font-weight: bold; letter-spacing: 0.35em; text-transform: uppercase; }
+  .rule { border: none; border-top: 3px solid var(--crimson); margin: 20px 0 24px 0; }
+
+  .bracket-strip {
+    background: var(--black); color: var(--white);
+    padding: 12px 16px; font-size: 1rem; margin: 0 0 24px 0; text-align: center;
+  }
+
+  h1 { font-size: 1.6rem; margin: 0 0 12px 0; color: var(--black); }
+  h2 { font-size: 1.25rem; margin: 28px 0 10px 0; color: var(--black); }
+  p { color: var(--gray-text); font-size: 1.05rem; margin: 0 0 16px 0; }
+  a { color: var(--crimson); }
+
+  .btn {
+    display: inline-block; background: var(--crimson); color: var(--white);
+    font-size: 1.05rem; font-weight: bold; text-decoration: none;
+    padding: 12px 22px; border: 2px solid var(--crimson-dark); cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .btn:hover, .btn:focus { background: var(--crimson-dark); }
+  .btn.dark { background: var(--black); border-color: var(--black); }
+  .btn.dark:hover, .btn.dark:focus { background: #333333; }
+  .btn.small { font-size: 0.95rem; padding: 9px 16px; }
+  .btn.done { background: var(--gray-bg); color: var(--gray-text); border-color: var(--gray-border); cursor: default; }
+
+  .listing {
+    border: 1px solid var(--gray-border); border-top: 4px solid var(--crimson);
+    padding: 16px 18px; margin: 0 0 18px 0; background: var(--white);
+  }
+  .listing.closed { opacity: 0.65; border-top-color: var(--black); }
+  .listing h3 { margin: 0 0 8px 0; font-size: 1.15rem; color: var(--black); }
+
+  .hw { margin: 0 0 10px 0; }
+  .hw .k {
+    display: inline-block; font-weight: bold; font-size: 0.8rem; letter-spacing: 0.12em;
+    padding: 2px 8px; margin-right: 8px; vertical-align: top;
+  }
+  .hw .k.have { background: var(--crimson); color: var(--white); }
+  .hw .k.want { background: var(--black); color: var(--white); }
+  .hw .v { color: var(--gray-text); font-size: 1rem; }
+  .hw .v strong { color: var(--black); }
+
+  .member-chip {
+    background: var(--gray-bg); border: 1px solid var(--gray-border);
+    padding: 8px 12px; font-size: 0.9rem; color: var(--gray-text); margin: 0 0 12px 0;
+  }
+  .member-chip .who { font-weight: bold; color: var(--black); }
+  .house-badge {
+    display: inline-block; background: var(--crimson); color: var(--white);
+    font-size: 0.72rem; font-weight: bold; letter-spacing: 0.08em;
+    padding: 1px 7px; margin-left: 6px; vertical-align: middle;
+  }
+  .closed-tag {
+    display: inline-block; background: var(--black); color: var(--white);
+    font-size: 0.72rem; font-weight: bold; letter-spacing: 0.08em; padding: 1px 7px; margin-left: 6px;
+  }
+
+  .panel {
+    background: var(--gray-bg); border: 1px solid var(--gray-border);
+    padding: 16px 18px; margin: 0 0 22px 0;
+  }
+  .panel h2, .panel h3 { margin-top: 0; }
+
+  label { display: block; font-weight: bold; margin: 12px 0 4px 0; color: var(--black); font-size: 0.98rem; }
+  input[type="text"], textarea, select {
+    width: 100%; padding: 11px; font-size: 1rem; border: 1px solid var(--gray-border);
+    font-family: Arial, Helvetica, sans-serif; background: var(--white);
+  }
+  textarea { min-height: 64px; }
+  .form-note { font-size: 0.88rem; color: var(--gray-text); margin-top: 4px; }
+  .form-error { color: var(--crimson); font-weight: bold; font-size: 0.95rem; display: none; margin-top: 10px; }
+
+  .thread { border: 1px solid var(--gray-border); padding: 16px 18px; margin: 0 0 18px 0; }
+  .thread h3 { margin: 0 0 8px 0; font-size: 1.1rem; }
+  .pinned {
+    background: var(--gray-bg); border-left: 4px solid var(--crimson);
+    padding: 10px 14px; margin: 0 0 12px 0; font-size: 0.95rem; color: var(--gray-text);
+  }
+  .pinned strong { color: var(--black); }
+  .msg { margin: 0 0 8px 0; font-size: 0.98rem; color: var(--gray-text); }
+  .msg .from { font-weight: bold; color: var(--black); }
+  .done-row { margin-top: 12px; }
+  .done-state { font-weight: bold; color: var(--black); margin: 8px 0 0 0; }
+
+  .fineprint { font-size: 0.9rem; color: var(--gray-text); }
+  .disclosure { border-left: 4px solid var(--crimson); padding: 4px 0 4px 14px; margin: 0 0 20px 0; }
+  .disclosure p { margin: 0 0 8px 0; font-size: 0.95rem; }
+  .disclosure p:last-child { margin-bottom: 0; }
+
+  footer {
+    margin-top: 40px; border-top: 1px solid var(--gray-border); padding-top: 14px;
+    font-size: 0.85rem; color: var(--gray-text); text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    .logo-block { font-size: 1.45rem; padding: 8px 12px; }
+    .tagline { letter-spacing: 0.22em; font-size: 0.85rem; }
+    h1 { font-size: 1.35rem; }
+    .btn { display: block; text-align: center; width: 100%; }
+    .btn.small { display: inline-block; width: auto; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header class="nameplate">
+      <div class="logo-blocks">
+        <span class="logo-block logo-michigan">Michigan</span><span class="logo-block logo-moneysaver">MoneySaver</span>
+      </div>
+      <div class="tagline">Barter House — Goods</div>
+    </header>
+
+    <hr class="rule">
+
+    <div class="bracket-strip">
+      Barter house: nothing is for sale — things trade for things.
+    </div>
+
+    <main>
+      <h1>Goods Wing — trade what you have</h1>
+
+      <p>
+        Post what you have, say what you'd take for it, and trade straight
+        across with a neighbor. There is no price field in this room and
+        there never will be — if it has a dollar figure on it, it belongs
+        on the money board, not here.
+      </p>
+
+      <p id="memberLine" class="fineprint"></p>
+
+      <h2>On the floor</h2>
+      <div id="listings"></div>
+
+      <div class="panel" id="proposePanel" style="display:none;">
+        <h3 id="proposeTitle">Propose a trade</h3>
+        <label for="offerText">What are you offering?</label>
+        <textarea id="offerText" placeholder="Name your own HAVE listing, or say it in words — the oak dresser from my listing, plus a load of firewood."></textarea>
+        <p class="form-error" id="proposeError"></p>
+        <p style="margin-top:14px;">
+          <button class="btn" id="sendProposal" type="button">Send Proposal</button>
+          <button class="btn dark" id="cancelProposal" type="button">Never Mind</button>
+        </p>
+      </div>
+
+      <h2>Your trade threads</h2>
+      <div id="threads">
+        <p class="fineprint">No trades going yet. Propose one from a listing above and it will stand here.</p>
+      </div>
+
+      <div class="panel">
+        <h2>Post a HAVE</h2>
+        <p class="fineprint">
+          Members post free during the founding build. One membership —
+          founding price $4.99/month (estimate) — covers both wings.
+          Browsing is free forever.
+        </p>
+        <form id="postForm">
+          <label for="fHave">What do you have?</label>
+          <input type="text" id="fHave" placeholder="e.g. Snowblower, older model">
+          <label for="fCondition">What shape is it in? (plain words)</label>
+          <select id="fCondition">
+            <option>Works great</option>
+            <option>Works, has a quirk</option>
+            <option>For parts</option>
+          </select>
+          <label for="fTown">Town</label>
+          <input type="text" id="fTown" placeholder="e.g. Johannesburg">
+          <label for="fWant">What would you take for it?</label>
+          <input type="text" id="fWant" placeholder="A specific thing, a kind of thing, or: open to offers">
+          <label for="fPhoto">Photo link (if you have one — optional)</label>
+          <input type="text" id="fPhoto" placeholder="https://…">
+          <p class="form-error" id="postError"></p>
+          <p style="margin-top:14px;">
+            <button class="btn" type="submit">Post It</button>
+          </p>
+          <p class="form-note">No dollar figures anywhere — a listing with a price on it is a listing error in this room.</p>
+        </form>
+      </div>
+
+      <div class="disclosure">
+        <p>
+          Meet in a public place. The house doesn't hold goods or money
+          and can't get either back for you.
+        </p>
+        <!-- Disclosure wording is a placeholder sense, pending Legal's final lines. -->
+        <p>
+          Trades count as income at fair value — ask your tax person. The
+          house doesn't report your trades for you.
+        </p>
+      </div>
+
+      <p>
+        Trades instead of cash for work? The
+        <a href="services.html">Services Wing</a> is the other half of the
+        house. Back to the <a href="index.html">Barter House front</a>, or
+        to the money side at the
+        <a href="https://garagesave-7hz4377a.manus.space">classifieds board</a>.
+      </p>
+    </main>
+
+    <footer>
+      Michigan Money Saver — Trade &amp; Barter House, Goods Wing<br>
+      <a href="index.html">Barter House</a> · <a href="services.html">Services Wing</a> ·
+      <a href="https://michiganmoneysaver.shop/">Personal Door</a><br>
+      &copy; <span id="year">2026</span> Michigan Money Saver
+    </footer>
+
+  </div>
+
+<script>
+  var STATE_KEY = 'mms-barter-v1';
+  var WING = 'goods';
+
+  // Founding seed listings — house listings, marked as such. Honest room:
+  // these are the house's own offers, not invented neighbors.
+  var SEEDS = [
+    {
+      id: 'seed-apex-software',
+      owner: 'Apex Air Solutions',
+      house: true,
+      have: 'Apex software bundle — Encrypted CB premium account plus a Signal Watch licence',
+      condition: 'Works great — current version',
+      town: 'Johannesburg',
+      want: 'Open to offers — tools, equipment, local services',
+      link: null
+    },
+    {
+      id: 'seed-kevin-stones',
+      owner: 'Kevin Stockwell — Great Lakes Rockhound',
+      house: true,
+      have: 'Polished Lake Superior stones and rock specimens — buckets of them, your pick',
+      condition: 'Works great — tumbled and polished',
+      town: 'Northern Michigan',
+      want: 'Open to offers — tell me what you have',
+      link: 'https://greatlakesrockhound.com'
+    }
+  ];
+
+  function freshState() {
+    return { member: null, extraListings: { goods: [], services: [] }, threads: [], counts: {}, closedListings: [] };
+  }
+  function loadState() {
+    try {
+      var raw = localStorage.getItem(STATE_KEY);
+      if (raw) { var s = JSON.parse(raw); if (s && s.extraListings) { return s; } }
+    } catch (e) { /* fresh state below */ }
+    return freshState();
+  }
+  function saveState() {
+    try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch (e) { /* storage unavailable */ }
+  }
+
+  // Proof fixtures: ?shot=thread / ?shot=done build the exact states the
+  // live flow produces, so the render proof shows the real machinery.
+  var shot = null;
+  (function () {
+    var m = /[?&]shot=([a-z]+)/.exec(window.location.search || '');
+    if (m) { shot = m[1]; }
+  })();
+
+  var state = loadState();
+  if (shot === 'thread' || shot === 'done') {
+    state.member = { name: 'Walkthrough Member' };
+    var fixtureThread = {
+      id: 'fixture-goods-1', wing: WING, listingId: SEEDS[0].id,
+      listingTitle: SEEDS[0].have, ownerName: SEEDS[0].owner,
+      offer: 'A rebuilt chainsaw, sharp and running, plus half a cord of split oak.',
+      scopeMine: null, scopeTheirs: null,
+      msgs: [ { from: SEEDS[0].owner, text: 'Fair trade. When do you want to meet?' } ],
+      doneMe: true, doneThem: (shot === 'done'), status: (shot === 'done' ? 'done' : 'open')
+    };
+    state.threads = [fixtureThread];
+    if (shot === 'done') {
+      state.counts[SEEDS[0].owner] = (state.counts[SEEDS[0].owner] || 0) + 1;
+      state.counts['Walkthrough Member'] = (state.counts['Walkthrough Member'] || 0) + 1;
+      state.closedListings = [SEEDS[0].id];
+    }
+  }
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function tradesOf(name) { return state.counts[name] || 0; }
+  function isClosed(id) { return state.closedListings.indexOf(id) >= 0; }
+  function hasDollars(text) { return /\$\s*\d/.test(text || ''); }
+
+  function allListings() {
+    var mine = state.extraListings.goods.map(function (l) {
+      return { id: l.id, owner: state.member ? state.member.name : 'You', house: false,
+               have: l.have, condition: l.condition, town: l.town, want: l.want, link: null };
+    });
+    return SEEDS.concat(mine);
+  }
+
+  var proposeTarget = null;
+
+  function render() {
+    // Member line
+    var ml = document.getElementById('memberLine');
+    if (state.member) {
+      ml.textContent = 'You are in, ' + state.member.name + ' — founding member. Your trades completed: ' + tradesOf(state.member.name) + '.';
+    } else {
+      ml.innerHTML = 'You are browsing — free forever. To post or propose, <a href="index.html">join the house</a> (founding price $4.99/month, estimate).';
+    }
+
+    // Listings
+    var box = document.getElementById('listings');
+    box.innerHTML = '';
+    allListings().forEach(function (l) {
+      var closed = isClosed(l.id);
+      var div = document.createElement('div');
+      div.className = 'listing' + (closed ? ' closed' : '');
+      var linkHtml = l.link ? ' · <a href="' + esc(l.link) + '">greatlakesrockhound.com</a>' : '';
+      div.innerHTML =
+        '<div class="member-chip"><span class="who">' + esc(l.owner) + '</span>' +
+        (l.house ? '<span class="house-badge">HOUSE LISTING</span>' : '') +
+        (closed ? '<span class="closed-tag">TRADED</span>' : '') +
+        '<br>Trades completed: ' + tradesOf(l.owner) + linkHtml + '</div>' +
+        '<div class="hw"><span class="k have">HAVE</span><span class="v"><strong>' + esc(l.have) + '</strong></span></div>' +
+        '<div class="hw"><span class="k want">WANT</span><span class="v">' + esc(l.want) + '</span></div>' +
+        '<p class="fineprint" style="margin:0 0 12px 0;">Shape: ' + esc(l.condition) + ' · Town: ' + esc(l.town) + '</p>' +
+        (closed ? '' : '<button class="btn small" type="button" data-propose="' + esc(l.id) + '">Propose a Trade</button>');
+      box.appendChild(div);
+    });
+    box.querySelectorAll('[data-propose]').forEach(function (btn) {
+      btn.addEventListener('click', function () { openPropose(btn.getAttribute('data-propose')); });
+    });
+
+    renderThreads();
+  }
+
+  function renderThreads() {
+    var box = document.getElementById('threads');
+    var mine = state.threads.filter(function (t) { return t.wing === WING; });
+    if (!mine.length) {
+      box.innerHTML = '<p class="fineprint">No trades going yet. Propose one from a listing above and it will stand here.</p>';
+      return;
+    }
+    box.innerHTML = '';
+    mine.forEach(function (t) {
+      var div = document.createElement('div');
+      div.className = 'thread';
+      var msgs = t.msgs.map(function (m) {
+        return '<p class="msg"><span class="from">' + esc(m.from) + ':</span> ' + esc(m.text) + '</p>';
+      }).join('');
+      var doneHtml;
+      if (t.status === 'done') {
+        doneHtml = '<p class="done-state">Trade done — both sides tapped. This listing is closed, and both trade counts went up one.</p>';
+      } else {
+        doneHtml =
+          '<div class="done-row">' +
+          '<button class="btn small' + (t.doneMe ? ' done' : '') + '" type="button" data-doneme="' + esc(t.id) + '">' +
+            (t.doneMe ? 'You tapped Trade done' : 'I Did My Part — Trade Done') + '</button> ' +
+          '<button class="btn small dark' + (t.doneThem ? ' done' : '') + '" type="button" data-donethem="' + esc(t.id) + '">' +
+            (t.doneThem ? 'Other side tapped Trade done' : 'Other Side: Trade Done') + '</button>' +
+          '<p class="fineprint" style="margin-top:8px;">Both sides tap when the swap is in hand. On the live board the other tap happens on the other member\u2019s phone — here the dark button walks it through.</p>' +
+          '</div>';
+      }
+      div.innerHTML =
+        '<h3>Trade with ' + esc(t.ownerName) + '</h3>' +
+        '<div class="pinned"><strong>House line, pinned:</strong> Meet in a public place. The house doesn\u2019t hold goods or money and can\u2019t get either back for you.</div>' +
+        '<p class="msg"><span class="from">Your offer:</span> ' + esc(t.offer) + '</p>' +
+        msgs + doneHtml;
+      box.appendChild(div);
+    });
+    box.querySelectorAll('[data-doneme]').forEach(function (btn) {
+      btn.addEventListener('click', function () { tapDone(btn.getAttribute('data-doneme'), 'me'); });
+    });
+    box.querySelectorAll('[data-donethem]').forEach(function (btn) {
+      btn.addEventListener('click', function () { tapDone(btn.getAttribute('data-donethem'), 'them'); });
+    });
+  }
+
+  function tapDone(id, side) {
+    var t = null;
+    state.threads.forEach(function (x) { if (x.id === id) { t = x; } });
+    if (!t || t.status === 'done') { return; }
+    if (side === 'me') { t.doneMe = true; } else { t.doneThem = true; }
+    if (t.doneMe && t.doneThem) {
+      t.status = 'done';
+      state.counts[t.ownerName] = tradesOf(t.ownerName) + 1;
+      if (state.member) { state.counts[state.member.name] = tradesOf(state.member.name) + 1; }
+      if (state.closedListings.indexOf(t.listingId) < 0) { state.closedListings.push(t.listingId); }
+    }
+    saveState();
+    render();
+  }
+
+  function openPropose(listingId) {
+    if (!state.member) {
+      alert('Members propose trades. Join the house from the front page — founding price $4.99/month (estimate). Browsing stays free.');
+      window.location.href = 'index.html';
+      return;
+    }
+    var found = null;
+    allListings().forEach(function (l) { if (l.id === listingId) { found = l; } });
+    if (!found) { return; }
+    proposeTarget = found;
+    document.getElementById('proposeTitle').textContent = 'Propose a trade — ' + found.owner;
+    document.getElementById('proposePanel').style.display = 'block';
+    document.getElementById('proposePanel').scrollIntoView();
+  }
+
+  document.getElementById('cancelProposal').addEventListener('click', function () {
+    proposeTarget = null;
+    document.getElementById('proposePanel').style.display = 'none';
+  });
+
+  document.getElementById('sendProposal').addEventListener('click', function () {
+    var offer = document.getElementById('offerText').value.replace(/^\s+|\s+$/g, '');
+    var err = document.getElementById('proposeError');
+    if (!offer) { err.textContent = 'Name what you are offering — a listing of yours, or plain words.'; err.style.display = 'block'; return; }
+    if (hasDollars(offer)) { err.textContent = 'No dollar figures in the barter house — describe the trade, not a price.'; err.style.display = 'block'; return; }
+    err.style.display = 'none';
+    state.threads.push({
+      id: 't' + Date.now(), wing: WING, listingId: proposeTarget.id,
+      listingTitle: proposeTarget.have, ownerName: proposeTarget.owner,
+      offer: offer, scopeMine: null, scopeTheirs: null, msgs: [],
+      doneMe: false, doneThem: false, status: 'open'
+    });
+    saveState();
+    document.getElementById('offerText').value = '';
+    document.getElementById('proposePanel').style.display = 'none';
+    proposeTarget = null;
+    render();
+    document.getElementById('threads').scrollIntoView();
+  });
+
+  document.getElementById('postForm').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var err = document.getElementById('postError');
+    if (!state.member) {
+      err.textContent = 'Members post listings. Join the house from the front page first — founding price $4.99/month (estimate).';
+      err.style.display = 'block';
+      return;
+    }
+    var have = document.getElementById('fHave').value.replace(/^\s+|\s+$/g, '');
+    var want = document.getElementById('fWant').value.replace(/^\s+|\s+$/g, '');
+    var town = document.getElementById('fTown').value.replace(/^\s+|\s+$/g, '');
+    if (!have || !want || !town) { err.textContent = 'A listing needs a HAVE, a WANT, and a town. Plain words are fine.'; err.style.display = 'block'; return; }
+    if (hasDollars(have) || hasDollars(want)) { err.textContent = 'No dollar figures in the barter house — a priced listing belongs on the money board.'; err.style.display = 'block'; return; }
+    err.style.display = 'none';
+    state.extraListings.goods.push({
+      id: 'u' + Date.now(), have: have,
+      condition: document.getElementById('fCondition').value,
+      town: town, want: want,
+      photo: document.getElementById('fPhoto').value.replace(/^\s+|\s+$/g, '')
+    });
+    saveState();
+    ev.target.reset();
+    render();
+    window.scrollTo(0, 0);
+  });
+
+  (function () {
+    var yearSpan = document.getElementById('year');
+    if (yearSpan) { yearSpan.textContent = String(new Date().getFullYear()); }
+    render();
+  })();
+</script>
+</body>
+</html>
