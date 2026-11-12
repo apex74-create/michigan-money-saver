@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Michigan Money Saver — Trade &amp; Barter House</title>
+<style>
+  :root {
+    --white: #FFFFFF;
+    --crimson: #C8102E;
+    --crimson-dark: #A30C25;
+    --black: #111111;
+    --gray-text: #3d3d3d;
+    --gray-border: #e3e3e3;
+    --gray-bg: #f6f6f6;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--white);
+    color: var(--black);
+    line-height: 1.5;
+    /* Bottom no-fly zone: nothing actionable lives in the lowest band. */
+    padding-bottom: 120px;
+  }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 24px 16px 0 16px; }
+
+  .nameplate { text-align: center; margin-bottom: 8px; }
+  .logo-blocks { display: flex; flex-wrap: wrap; justify-content: center; gap: 0; }
+  .logo-block { display: inline-block; font-weight: bold; font-size: 2rem; letter-spacing: 0.02em; padding: 10px 18px; line-height: 1.1; }
+  .logo-michigan { background: var(--crimson); color: var(--white); }
+  .logo-moneysaver { background: var(--black); color: var(--white); }
+  .tagline { margin-top: 14px; color: var(--crimson); font-size: 0.95rem; font-weight: bold; letter-spacing: 0.35em; text-transform: uppercase; }
+  .rule { border: none; border-top: 3px solid var(--crimson); margin: 20px 0 24px 0; }
+
+  .bracket-strip {
+    background: var(--black); color: var(--white);
+    padding: 12px 16px; font-size: 1rem; margin: 0 0 24px 0; text-align: center;
+  }
+  .bracket-strip strong { color: var(--white); }
+
+  h1 { font-size: 1.6rem; margin: 0 0 12px 0; color: var(--black); }
+  h2 { font-size: 1.25rem; margin: 28px 0 10px 0; color: var(--black); }
+  p { color: var(--gray-text); font-size: 1.05rem; margin: 0 0 16px 0; }
+
+  .wing-card {
+    border: 1px solid var(--gray-border); border-top: 4px solid var(--crimson);
+    padding: 18px 20px; margin: 0 0 20px 0; background: var(--white);
+  }
+  .wing-card h2 { margin-top: 0; }
+  .wing-card p { margin-bottom: 12px; }
+
+  .board-button {
+    display: inline-block; background: var(--crimson); color: var(--white);
+    font-size: 1.1rem; font-weight: bold; text-decoration: none;
+    padding: 13px 24px; border: 2px solid var(--crimson-dark); cursor: pointer;
+  }
+  .board-button:hover, .board-button:focus { background: var(--crimson-dark); }
+  .board-button.dark { background: var(--black); border-color: var(--black); }
+  .board-button.dark:hover, .board-button.dark:focus { background: #333333; }
+
+  .member-box {
+    background: var(--gray-bg); border: 1px solid var(--gray-border);
+    padding: 18px 20px; margin: 0 0 24px 0;
+  }
+  .member-box h2 { margin-top: 0; }
+  .price-line { font-size: 1.2rem; font-weight: bold; color: var(--black); }
+  .price-line .est { color: var(--crimson); font-size: 0.95rem; }
+
+  .fineprint { font-size: 0.9rem; color: var(--gray-text); }
+  .disclosure {
+    border-left: 4px solid var(--crimson); padding: 4px 0 4px 14px; margin: 0 0 20px 0;
+  }
+  .disclosure p { margin: 0 0 8px 0; font-size: 0.95rem; }
+  .disclosure p:last-child { margin-bottom: 0; }
+
+  label { display: block; font-weight: bold; margin: 12px 0 4px 0; color: var(--black); }
+  input[type="text"] {
+    width: 100%; padding: 11px; font-size: 1rem; border: 1px solid var(--gray-border);
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  footer {
+    margin-top: 40px; border-top: 1px solid var(--gray-border); padding-top: 14px;
+    font-size: 0.85rem; color: var(--gray-text); text-align: center;
+  }
+  footer a { color: var(--crimson); }
+
+  @media (max-width: 480px) {
+    .logo-block { font-size: 1.45rem; padding: 8px 12px; }
+    .tagline { letter-spacing: 0.22em; font-size: 0.85rem; }
+    h1 { font-size: 1.35rem; }
+    .board-button { display: block; text-align: center; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header class="nameplate">
+      <div class="logo-blocks">
+        <span class="logo-block logo-michigan">Michigan</span><span class="logo-block logo-moneysaver">MoneySaver</span>
+      </div>
+      <div class="tagline">Trade &amp; Barter House</div>
+    </header>
+
+    <hr class="rule">
+
+    <div class="bracket-strip">
+      Money board: things are for sale.<br>
+      <strong>Barter house: nothing is for sale — things trade for things.</strong>
+    </div>
+
+    <main>
+      <h1>The Trade &amp; Barter House</h1>
+
+      <p>
+        This is the room Michigan Money Saver was built for. No prices, no
+        percentages, no money changing hands. You bring what you have, you
+        say what you want, and you and a neighbor work out the trade
+        yourselves. The house just keeps the ground — it never touches the
+        goods and it never touches money, because there is none here.
+      </p>
+
+      <p>
+        Browsing is <strong>free forever</strong> — look all you want. To
+        post what you have and propose trades, you join the house. One
+        membership opens both wings.
+      </p>
+
+      <div class="wing-card">
+        <h2>Goods — trade what you have</h2>
+        <p>
+          Equipment, tools, stones, firewood, the thing in the barn somebody
+          else needs. Post a HAVE, say what you'd take for it, trade it for
+          the thing you actually want.
+        </p>
+        <a class="board-button" href="goods.html">Enter the Goods Wing</a>
+      </div>
+
+      <div class="wing-card">
+        <h2>Services — trade what you can do</h2>
+        <p>
+          Labor is the one thing every tradesman has extra of and every
+          homeowner is short of. A website for a plumbing job. Firewood
+          splitting for a weld. Your skill against the job you need done.
+        </p>
+        <a class="board-button dark" href="services.html">Enter the Services Wing</a>
+      </div>
+
+      <div class="member-box" id="memberBox">
+        <h2>Join the Barter House</h2>
+        <p class="price-line">Founding price: $4.99/month <span class="est">(estimate)</span></p>
+        <p>
+          One membership covers both wings — post listings and send trade
+          proposals in goods and services alike. Browsing stays free
+          forever.
+        </p>
+        <div id="joinArea">
+          <label for="memberName">Your name</label>
+          <input type="text" id="memberName" placeholder="e.g. Sam from Gaylord">
+          <p style="margin-top:14px;">
+            <button class="board-button" id="joinBtn" type="button">Join the House</button>
+          </p>
+          <p class="fineprint">
+            Founding build: joining puts your name on the founding member
+            list. The $4.99/month founding price (estimate) starts when
+            membership checkout opens at launch — founding members post
+            free until then. No card is taken on this page.
+          </p>
+        </div>
+        <p id="memberState" style="display:none; font-weight:bold; color: var(--black);"></p>
+      </div>
+
+      <div class="disclosure">
+        <p>
+          Meet in a public place. The house doesn't hold goods or money
+          and can't get either back for you.
+        </p>
+        <!-- Disclosure wording is a placeholder sense, pending Legal's final lines. -->
+        <p>
+          Trades count as income at fair value — ask your tax person. The
+          house doesn't report your trades for you.
+        </p>
+        <p>
+          Nobody here earns anything for bringing in a member. Membership
+          is ground rent, plain and simple — the only money the house ever
+          takes is the rent itself.
+        </p>
+      </div>
+
+      <p>
+        Looking to buy or sell for money instead? That's the other bracket:
+        the <a href="https://garagesave-7hz4377a.manus.space">classifieds
+        board</a>, through the
+        <a href="https://michiganmoneysaver.shop/">personal door</a> or the
+        <a href="https://michiganmoneysaver.pro/">professional door</a>.
+      </p>
+    </main>
+
+    <footer>
+      Michigan Money Saver — Trade &amp; Barter House<br>
+      <a href="goods.html">Goods Wing</a> · <a href="services.html">Services Wing</a> ·
+      <a href="https://garagesave-7hz4377a.manus.space">Classifieds Board</a><br>
+      &copy; <span id="year">2026</span> Michigan Money Saver
+    </footer>
+
+  </div>
+
+<script>
+  // Barter House shared state (same key across all three barter pages).
+  var STATE_KEY = 'mms-barter-v1';
+  function loadState() {
+    try {
+      var raw = localStorage.getItem(STATE_KEY);
+      if (raw) { return JSON.parse(raw); }
+    } catch (e) { /* fall through to fresh state */ }
+    return { member: null, extraListings: { goods: [], services: [] }, threads: [], counts: {}, closedListings: [] };
+  }
+  function saveState(state) {
+    try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch (e) { /* storage unavailable */ }
+  }
+
+  (function () {
+    var yearSpan = document.getElementById('year');
+    if (yearSpan) { yearSpan.textContent = String(new Date().getFullYear()); }
+
+    var state = loadState();
+    var joinArea = document.getElementById('joinArea');
+    var memberState = document.getElementById('memberState');
+
+    function paintMember() {
+      if (state.member && state.member.name) {
+        joinArea.style.display = 'none';
+        memberState.style.display = 'block';
+        memberState.textContent = 'You are a founding member, ' + state.member.name +
+          '. Both wings are open to you — post and propose from either wing page.';
+      }
+    }
+    paintMember();
+
+    document.getElementById('joinBtn').addEventListener('click', function () {
+      var name = document.getElementById('memberName').value.replace(/^\s+|\s+$/g, '');
+      if (!name) { alert('Give your name so neighbors know who they are trading with.'); return; }
+      state.member = { name: name };
+      saveState(state);
+      paintMember();
+    });
+  })();
+</script>
+</body>
+</html>
