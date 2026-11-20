@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Michigan Money Saver — The Classifieds Board</title>
+<meta name="description" content="The Michigan Money Saver classifieds board — on Michigan Money Saver's own property. Listing is free, browsing is free. Personal items, collectibles, and house listings.">
+<link rel="canonical" href="https://apex74-create.github.io/michigan-money-saver/classifieds/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Michigan Money Saver — The Classifieds Board">
+<meta property="og:description" content="The Michigan Money Saver classifieds board — on Michigan Money Saver's own property. Listing is free, browsing is free.">
+<meta property="og:url" content="https://apex74-create.github.io/michigan-money-saver/classifieds/">
+<style>
+  :root {
+    --white: #FFFFFF;
+    --crimson: #C8102E;
+    --crimson-dark: #A30C25;
+    --black: #111111;
+    --gray-text: #3d3d3d;
+    --gray-border: #e3e3e3;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #0b0b0d;
+    color: var(--black);
+    line-height: 1.5;
+    /* Bottom no-fly zone: nothing actionable lives in the lowest band. */
+    padding-bottom: 150px;
+  }
+
+  /* ---- Hero graphic background (the flavor map, every Apex site) ---- */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(1100px 520px at 85% -10%, rgba(200,16,46,.50), rgba(200,16,46,0) 60%),
+      radial-gradient(900px 620px at -12% 108%, rgba(200,16,46,.26), rgba(200,16,46,0) 55%),
+      repeating-linear-gradient(45deg, rgba(255,255,255,.045) 0 2px, rgba(255,255,255,0) 2px 14px),
+      linear-gradient(160deg, #17171a 0%, #0b0b0d 55%, #131315 100%);
+  }
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 10px;
+    z-index: 0;
+    pointer-events: none;
+    border: 1px solid rgba(255,255,255,.13);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.35);
+  }
+
+  /* ---- The framed glass sheet ---- */
+  .sheet {
+    position: relative;
+    z-index: 1;
+    max-width: 780px;
+    margin: 26px auto 0 auto;
+    padding: 28px 20px 36px 20px;
+    background: linear-gradient(165deg, rgba(255,255,255,.94), rgba(255,255,255,.87));
+    -webkit-backdrop-filter: blur(14px) saturate(1.15);
+    backdrop-filter: blur(14px) saturate(1.15);
+    border: 1px solid rgba(255,255,255,.7);
+    box-shadow:
+      0 0 0 1px rgba(200,16,46,.55),
+      0 0 0 6px rgba(10,10,10,.85),
+      0 0 0 7px rgba(255,255,255,.28),
+      0 30px 60px rgba(0,0,0,.55);
+  }
+  .sheet::before, .sheet::after {
+    content: "";
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border: 3px solid var(--crimson);
+  }
+  .sheet::before { top: -10px; left: -10px; border-right: none; border-bottom: none; }
+  .sheet::after { bottom: -10px; right: -10px; border-left: none; border-top: none; }
+
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .sheet { background: #f4f4f4; }
+    .glass { background: #ffffff; }
+    .glass-dark { background: #161616; }
+  }
+
+  /* ---- Nameplate: the paper's block logo treatment ---- */
+  .nameplate { text-align: center; margin-bottom: 8px; }
+  .logo-blocks { display: flex; flex-wrap: wrap; justify-content: center; gap: 0; }
+  .logo-block {
+    display: inline-block; font-weight: bold; font-size: 2rem;
+    letter-spacing: 0.02em; padding: 10px 18px; line-height: 1.1;
+  }
+  .logo-michigan { background: var(--crimson); color: var(--white); }
+  .logo-moneysaver { background: var(--black); color: var(--white); }
+  .tagline {
+    margin-top: 14px; color: var(--crimson); font-size: 0.95rem; font-weight: bold;
+    letter-spacing: 0.35em; text-transform: uppercase;
+  }
+  .rule { border: none; border-top: 3px solid var(--crimson); margin: 20px 0 26px 0; }
+
+  h1 { font-size: 1.6rem; margin: 0 0 12px 0; color: var(--black); }
+  h2 { font-size: 1.3rem; margin: 30px 0 10px 0; color: var(--black); }
+  p { color: var(--gray-text); font-size: 1.05rem; margin: 0 0 16px 0; }
+
+  /* ---- Glass panels ---- */
+  .glass {
+    background: rgba(255,255,255,.68);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(17,17,17,.14);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 8px 20px rgba(0,0,0,.10);
+    padding: 16px 18px;
+    margin: 0 0 22px 0;
+  }
+  .glass-dark {
+    background: rgba(17,17,17,.90);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,.22);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 10px 24px rgba(0,0,0,.28);
+    color: var(--white);
+    padding: 18px 20px;
+    margin: 0 0 22px 0;
+  }
+  .glass-dark h2 { color: var(--white); margin-top: 0; }
+  .glass-dark p { color: #e8e8e8; }
+  .glass-dark .price-figure { color: var(--white); font-weight: bold; font-size: 1.35rem; }
+  .glass p:last-child { margin-bottom: 0; }
+
+  .badge {
+    display: inline-block; background: var(--crimson); color: var(--white);
+    font-size: 0.7rem; font-weight: bold; letter-spacing: 0.08em; padding: 1px 7px;
+  }
+  .badge.black { background: var(--black); }
+
+  .btn {
+    display: inline-block; background: var(--crimson); color: var(--white);
+    font-size: 1rem; font-weight: bold; text-decoration: none;
+    padding: 11px 20px; border: 2px solid var(--crimson-dark); cursor: pointer;
+  }
+  .btn:hover, .btn:focus { background: var(--crimson-dark); }
+  .btn.dark { background: var(--black); border-color: var(--black); }
+  .btn.dark:hover, .btn.dark:focus { background: #333333; }
+  .btn.small { font-size: 0.92rem; padding: 8px 14px; }
+
+  /* ---- Listing cards ---- */
+  .cards { display: grid; gap: 16px; margin: 0 0 8px 0; }
+  @media (min-width: 640px) { .cards.two { grid-template-columns: 1fr 1fr; } }
+  .card {
+    background: rgba(255,255,255,.72);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(17,17,17,.14);
+    border-top: 4px solid var(--crimson);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 8px 18px rgba(0,0,0,.12);
+    padding: 16px 18px;
+  }
+  .card.black-top { border-top-color: var(--black); }
+  .card h3 { margin: 8px 0 8px 0; font-size: 1.2rem; color: var(--black); }
+  .card p { font-size: 0.98rem; margin: 0 0 10px 0; }
+  .card .price { font-weight: bold; font-size: 1.3rem; color: var(--black); margin: 0 0 10px 0; }
+  .card .field {
+    display: inline-block; font-size: 0.78rem; font-weight: bold; letter-spacing: 0.06em;
+    color: var(--crimson-dark); text-transform: uppercase; margin: 0 0 8px 0;
+  }
+  .card .tariff { font-size: 0.9rem; color: var(--gray-text); margin: 10px 0 12px 0; }
+  .card .photos { display: grid; gap: 10px; margin: 0 0 14px 0; }
+  @media (min-width: 640px) { .card .photos { grid-template-columns: 1fr 1fr; } }
+  .card .photos figure { margin: 0; }
+  .card .photos img {
+    width: 100%; height: auto; display: block;
+    border: 1px solid rgba(17,17,17,.25);
+  }
+  .card .photos figcaption { font-size: 0.82rem; color: var(--gray-text); margin-top: 5px; }
+
+  /* ---- The Vitamin Shop face tile: a window on the board.
+         The shop is not hung yet; when it hangs, its destination
+         drops into this tile (id="vitamin-shop-tile"). ---- */
+  .face-tile {
+    display: grid; gap: 16px; align-items: center;
+    background: rgba(255,255,255,.72);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(17,17,17,.14);
+    border-top: 4px solid var(--black);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 8px 18px rgba(0,0,0,.12);
+    padding: 18px;
+    margin: 0 0 8px 0;
+  }
+  @media (min-width: 640px) { .face-tile { grid-template-columns: 168px 1fr; } }
+  .face-tile .face-graphic {
+    border: 1px solid rgba(17,17,17,.18);
+    background: linear-gradient(165deg, rgba(255,255,255,.9), rgba(246,246,246,.75));
+    padding: 14px;
+  }
+  .face-tile .face-graphic svg { display: block; width: 100%; height: auto; }
+  .face-tile h3 { margin: 6px 0 8px 0; font-size: 1.2rem; color: var(--black); }
+  .face-tile p { font-size: 0.98rem; margin: 0 0 8px 0; }
+  .face-tile .state { font-weight: bold; color: var(--crimson-dark); }
+
+  /* Door cards: back to the two doors. */
+  .doorcards { display: grid; gap: 14px; margin: 0 0 6px 0; }
+  @media (min-width: 640px) { .doorcards { grid-template-columns: 1fr 1fr; } }
+  .doorcard h2 { margin-top: 0; }
+  .doorcard p { margin-bottom: 14px; }
+
+  footer {
+    margin-top: 40px; border-top: 1px solid rgba(17,17,17,.18); padding-top: 14px;
+    font-size: 0.85rem; color: var(--gray-text); text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    .sheet { margin-top: 16px; padding: 22px 14px 30px 14px; }
+    .logo-block { font-size: 1.45rem; padding: 8px 12px; }
+    .tagline { letter-spacing: 0.22em; font-size: 0.85rem; }
+    h1 { font-size: 1.35rem; }
+    .btn { display: block; text-align: center; }
+    .card .btn { display: inline-block; }
+  }
+</style>
+</head>
+<body>
+  <div class="sheet">
+
+    <header class="nameplate">
+      <div class="logo-blocks">
+        <span class="logo-block logo-michigan">Michigan</span><span class="logo-block logo-moneysaver">MoneySaver</span>
+      </div>
+      <div class="tagline">The Classifieds Board</div>
+    </header>
+
+    <hr class="rule">
+
+    <main>
+      <h1>The board — right here, on our own property.</h1>
+
+      <p>
+        This is the Michigan Money Saver classifieds board, served from Michigan Money
+        Saver's own property — not rented space somewhere else. Listing is free.
+        Browsing is free. What is posted here is for sale here.
+      </p>
+
+      <div class="glass-dark" id="costs">
+        <h2>What it costs — plain and simple</h2>
+        <p>
+          Listing is <span class="price-figure">free</span> — on this board and on
+          both doors alike.
+        </p>
+        <p>
+          Reaching a seller costs the tariff: <span class="price-figure">99&cent;</span> on a
+          listing up to $99, <span class="price-figure">$9.99</span> on a listing over
+          $99 — per deal, every time.
+        </p>
+        <p>
+          The Barter House is not open yet, and no membership is being sold.
+          Browsing the classifieds board is free.
+        </p>
+      </div>
+
+      <h2>Personal Items &amp; Collectibles</h2>
+      <div class="cards">
+        <article class="card">
+          <span class="badge">FIRST INGEST</span>
+          <h3>2013 USPS Muscle Cars Forever Stamp Pane — Full Pane of 20, Still in Original Bag with Receipt</h3>
+          <p class="price">$30</p>
+          <span class="field">Personal Items · Collectibles</span>
+          <div class="photos">
+            <figure>
+              <img src="images/stamps-pane-front.jpg" alt="The 2013 Muscle Cars Forever stamp pane of 20, front — five classic American muscle cars">
+              <figcaption>The full pane of 20, front.</figcaption>
+            </figure>
+            <figure>
+              <img src="images/stamps-receipt-back.jpg" alt="The back of the stamp pane with the original Petoskey post office receipt from May 29, 2013">
+              <figcaption>The pane back with the original 2013 receipt.</figcaption>
+            </figure>
+          </div>
+          <p>
+            The complete 2013 "Muscle Cars" Forever pane — Scott 4743–4747 — with all five
+            designs, four of each: the 1969 Charger Daytona, the 1966 Pontiac GTO, the 1967
+            Shelby GT-500, the 1970 Chevelle SS, and the 1970 Plymouth Hemi 'Cuda.
+            Plate V11111, plate position V2.
+          </p>
+          <p>
+            Bought May 29, 2013 at the Petoskey, Michigan post office for $9.20, and kept in
+            its original bag with the receipt ever since — the receipt is included and shown
+            in the photos. The stamps are mint and intact; the backing paper shows light age
+            spotting from its years in the bag. Sold with the original bag and the receipt:
+            the provenance travels with the pane.
+          </p>
+          <p class="tariff">Reaching the seller on this listing costs the tariff: 99&cent; (listings up to $99), per deal.</p>
+          <a class="btn small" href="mailto:masteradminapex@apex-airsolutions.com?subject=Classifieds%20board%20—%202013%20Muscle%20Cars%20stamp%20pane%20($30)">Reach the seller through the board</a>
+        </article>
+      </div>
+
+      <h2>House listings</h2>
+      <div class="cards two">
+        <article class="card">
+          <span class="badge">HOUSE LISTING</span>
+          <h3>Apex Browser Guard</h3>
+          <p>Browser protection for Chrome — one price, for life.</p>
+          <p class="price">$9.99 lifetime</p>
+          <span class="field">House Listing</span>
+          <p class="tariff">Reaching the seller on this listing costs the tariff: 99&cent; (listings up to $99), per deal.</p>
+          <a class="btn small" href="mailto:masteradminapex@apex-airsolutions.com?subject=Classifieds%20board%20—%20Apex%20Browser%20Guard%20($9.99%20lifetime)">Reach the seller through the board</a>
+        </article>
+        <article class="card black-top">
+          <span class="badge black">HOUSE LISTING</span>
+          <h3>Apex Auction House</h3>
+          <p>The clearing house — timed drops, 24 in 12. Lot № 1 is live.</p>
+          <p class="price">$2,999 estimate — Lot № 1</p>
+          <span class="field">House Listing</span>
+          <p class="tariff">Reaching the seller on this listing costs the tariff: $9.99 (listings over $99), per deal.</p>
+          <a class="btn small dark" href="https://apex74-create.github.io/apex-auction-house/">Visit the Auction House</a>
+        </article>
+      </div>
+
+      <h2>On its way</h2>
+      <!-- VITAMIN SHOP FACE TILE — the shop's window on the board.
+           The shop itself is not hung yet. When it hangs, its address
+           drops into this tile and the tile becomes the way in. -->
+      <div class="face-tile" id="vitamin-shop-tile">
+        <div class="face-graphic" aria-hidden="true">
+          <svg viewBox="0 0 120 120" role="img" aria-label="Apex Vitamin Shop">
+            <rect x="38" y="30" width="44" height="74" rx="7" fill="none" stroke="#111111" stroke-width="3"/>
+            <rect x="47" y="14" width="26" height="16" rx="3" fill="#C8102E"/>
+            <rect x="45" y="52" width="30" height="34" fill="none" stroke="#C8102E" stroke-width="2.5"/>
+            <path d="M60 78 C52 70 52 62 60 56 C68 62 68 70 60 78 Z" fill="#C8102E"/>
+            <path d="M60 78 C60 70 60 64 60 58" stroke="#111111" stroke-width="2" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <span class="badge black">FACE TILE</span>
+          <h3>Apex Vitamin Shop</h3>
+          <p class="state">Being put together.</p>
+          <p>
+            This tile is the Vitamin Shop's window on the board. The shop is being
+            assembled now; when it is hung, it opens right here — this tile becomes
+            the way in.
+          </p>
+        </div>
+      </div>
+
+      <div class="doorcards">
+        <div class="glass doorcard">
+          <h2>The personal door</h2>
+          <p>Personal equipment classifieds — the .shop door of Michigan Money Saver.</p>
+          <a class="btn" href="https://michiganmoneysaver.shop/">michiganmoneysaver.shop</a>
+        </div>
+        <div class="glass doorcard">
+          <h2>The professional door</h2>
+          <p>Businesses, trades, and services — the .pro door of Michigan Money Saver.</p>
+          <a class="btn" href="https://michiganmoneysaver.pro/">michiganmoneysaver.pro</a>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      Michigan Money Saver — The Classifieds Board<br>
+      &copy; <span id="year">2026</span> Michigan Money Saver
+    </footer>
+
+  </div>
+
+<script>
+  // Keep the footer year current without any outside help.
+  (function () {
+    var yearSpan = document.getElementById('year');
+    if (yearSpan) {
+      yearSpan.textContent = String(new Date().getFullYear());
+    }
+  })();
+</script>
+</body>
+</html>
